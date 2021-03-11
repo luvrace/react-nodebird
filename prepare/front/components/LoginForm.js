@@ -1,7 +1,9 @@
 import React, {useState, useCallback, useMemo} from 'react';
+import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
+import useInput from '../hooks/useInput';
 
 //ButtonWrapper가 div컴포넌트가 된다.
 const ButtonWrapper  = styled.div`
@@ -13,17 +15,20 @@ const FormWrapper = styled(Form)`
 `;
 
 const LoginForm = ({setIsLoggedIn}) => {
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
-
+    // const [id, setId] = useState('');
     //최적화
-    const onChangeId = useCallback((e) => {
-        setId(e.target.value);
-    },[]);
+    // const onChangeId = useCallback((e) => {
+    //     setId(e.target.value);
+    // },[]);
 
-    const onChangePassword = useCallback((e) => {
-        setPassword(e.target.value);
-    },[]);
+    const [id, onChangeId] = useInput('');
+
+    // const [password, setPassword] = useState('');
+    // const onChangePassword = useCallback((e) => {
+    //     setPassword(e.target.value);
+    // },[]);
+
+    const [password, onChangePassword] = useInput('');
 
     const style = useMemo(() => ({ marginTop:10}),[]);
 
@@ -57,6 +62,10 @@ const LoginForm = ({setIsLoggedIn}) => {
             </ButtonWrapper>
         </FormWrapper>
     );
+}
+
+LoginForm.propTypes = {
+    setIsLoggedIn: PropTypes.func.isRequired,
 }
 
 export default LoginForm;
